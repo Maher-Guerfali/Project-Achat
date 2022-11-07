@@ -10,6 +10,12 @@ pipeline {
             }
         }
         
+        stage('Testing Maven Build'){
+            steps {
+                sh "mvn clean install"
+            }
+        }
+        
         stage('Testing Maven Livrable'){
             steps {
                 sh "mvn package"
