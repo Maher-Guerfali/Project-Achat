@@ -10,9 +10,9 @@ pipeline {
             }
         }
         
-        stage('Testing Maven Build'){
+        stage('Testing Maven Livrable'){
             steps {
-                sh "mvn clean install"
+                sh "mvn package"
             }
         }
         
