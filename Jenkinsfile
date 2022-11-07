@@ -28,20 +28,19 @@ pipeline {
             }
         }
         
-        stage('DOCKER'){
-            steps {
-                sh "docker login -u strevana -p 949788Ab@"
-                sh "docker build -t strevana/devopsapp:1.0.SNAPSHOT ."
-                sh "docker push strevana/devopsapp"
-            }
-        }
-        
         stage('SONARQUBE'){
             steps {
                 sh "mvn verify sonar:sonar -Dsonar.login=admin -Dsonar.password=strevana"
             }
         }
         
+        stage('DOCKER'){
+            steps {
+                sh "docker login -u strevana -p 949788Ab@"
+                sh "docker build -t strevana/devopsapp:1.0.SNAPSHOT ."
+                sh "docker push strevana/devopsapp"
+            }
+        }      
         
     }
 }
