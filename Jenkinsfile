@@ -49,8 +49,8 @@ pipeline {
          stage('Testing Docker File'){
             steps {
                 sh "docker login -u louaybader -p iyed26429517"
-                sh "docker build -t louaybader/devopsspring:1.0.SNAPSHOT ."
-                sh "docker push louaybder/devopsspring"
+                sh "docker build -t louaybader/springdevopsapp:1.0.SNAPSHOT ."
+                sh "docker push louaybder/springdevopsapp"
             }
         }
     }
