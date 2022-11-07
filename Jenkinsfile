@@ -10,13 +10,13 @@ pipeline {
             }
         }
         
-        stage('Build MAVEN'){
+        stage('Creating package in target'){
             steps {
-                sh "mvn clean install"
+                sh "mvn package"
             }
         }
 
-        stage('Test MAVEN'){
+        stage('Run unit tests'){
             steps {
                 sh "mvn test"
             }
