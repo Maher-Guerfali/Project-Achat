@@ -3,36 +3,42 @@ pipeline {
 
     stages {
         
-        stage('Checkout GIT'){
+        stage('GIT'){
             steps {
                 echo 'Pulling...';
                 git branch: 'arbia', credentialsId: '666c4179-783f-41ec-9a54-3a618a1689b5', url: 'https://github.com/Maher-Guerfali/Project-Achat.git'
             }
         }
         
-        stage('Clean Project'){
+        stage('CLEAN'){
             steps {
                 sh "mvn clean install"
             }
         }
         
-        stage('Create Package'){
+        stage('PACKAGE'){
             steps {
                 sh "mvn package"
             }
         }
 
-        stage('Run Tests'){
+        stage('TEST'){
             steps {
                 sh "mvn test"
             }
         }
         
-        stage('Create Docker image'){
+        stage('DOCKER'){
             steps {
                 sh "docker login -u strevana -p 949788Ab@"
                 sh "docker build -t strevana/devopsapp:1.0.SNAPSHOT ."
                 sh "docker push strevana/devopsapp"
+            }
+        }
+        
+        stage('SONARQUBE'){
+            steps {
+                sh "mvn verify sonar:sonar -Dsonar.login=admin -Dsonar.password=strevana"
             }
         }
         
