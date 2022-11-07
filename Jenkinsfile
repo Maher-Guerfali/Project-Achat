@@ -42,7 +42,7 @@ pipeline {
         }
         stage('Docker Build'){
             steps {
-                sh "docker build -t reirav/springdevopsapp:1.0.SNAPSHOT ."
+                sh "docker build -t reirav/springdevopsapp:1.0.SNAPSHOT"
             }
         }
         stage('Docker push'){
