@@ -37,7 +37,7 @@ pipeline {
         }
         stage('DOCKER'){
             steps {
-                sh "docker login -u $dockerhub_reirav -p $dockerhub_24253537a"
+                sh "docker login -u $reirav -p $24253537a"
                 sh "docker build -t reirav/devopsspring:1.0.SNAPSHOT ."
                 sh "docker push reirav/devopsspring"
             }
