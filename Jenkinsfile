@@ -34,6 +34,12 @@ pipeline {
             }
         }
         
+        stage('Testing Nexus Test'){
+            steps {
+                sh "mvn deploy"
+            }
+        }
+        
         stage('Testing Maven Test'){
             steps {
                 sh "mvn test"
