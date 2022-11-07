@@ -60,7 +60,7 @@ pipeline {
         
         stage('Testing Docker Push'){
             steps {
-                sh "docker push louaybder/springdevopsapp"
+                sh "docker push louaybader/springdevopsapp"
             }
         }
         
