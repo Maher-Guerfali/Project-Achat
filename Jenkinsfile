@@ -10,9 +10,33 @@ pipeline {
             }
         }
         
+        stage('Testing Maven Clean'){
+            steps {
+                sh "mvn clean"
+            }
+        }
+        
+        stage('Testing Maven Compile'){
+            steps {
+                sh "mvn compile"
+            }
+        }
+        
         stage('Testing Maven Livrable'){
             steps {
                 sh "mvn package"
+            }
+        }
+        
+        stage('Testing Sonar Test'){
+            steps {
+                sh "mvn verify sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
+            }
+        }
+        
+        stage('Testing Nexus Test'){
+            steps {
+                sh "mvn deploy"
             }
         }
         
