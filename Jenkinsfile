@@ -12,8 +12,7 @@ pipeline {
         
         stage('Testing Maven'){
             steps {
-                echo 'hello'
-                sh "ls"
+                sh "mvn clean install"
             }
         }
     }
