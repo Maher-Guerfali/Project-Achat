@@ -14,7 +14,7 @@ services:
      - MYSQL_PASSWORD=
 
   spring_app:
-    image: fediba/achat
+    image: jouinibrahim/achat
     container_name: achatspring
     restart: on-failure
     environment:
