@@ -35,10 +35,18 @@ pipeline {
                 sh "mvn deploy"
             }
         }
-        stage('DOCKER'){
+        stage('Login'){
             steps {
                 sh "docker login -u reirav -p 24253537a"
+            }
+        }
+        stage('Docker Build'){
+            steps {
                 sh "docker build -t reirav/springdevopsapp:1.0.SNAPSHOT ."
+            }
+        }
+        stage('Docker push'){
+            steps {
                 sh "docker push reirav/springdevopsapp"
             }
         }
