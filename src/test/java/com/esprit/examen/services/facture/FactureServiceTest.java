@@ -1,78 +1,136 @@
 package com.esprit.examen.services.facture;
 
-import com.esprit.examen.entities.Facture;
-import com.esprit.examen.repositories.FactureRepository;
-import com.esprit.examen.services.FactureServiceImpl;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.esprit.examen.entities.Facture;
+import com.esprit.examen.entities.Produit;
+import com.esprit.examen.repositories.FactureRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
-public class FactureServiceTest {
-    @Mock
+@Slf4j
+public class FactureServiceImplTest {
+    @Autowired
+    IFactureService factureService;
+    @Autowired
     FactureRepository factureRepository;
 
-    @InjectMocks
-    FactureServiceImpl factureService;
-
     @Test
-    public void testRetrieveFacture() {
+    public void testAddFacture() throws ParseException {
 
-        Facture facture = new Facture(1L, 100, 500, null, null, null, null, null, null);
+        SimpleDateFormat dateFormat = null;
+        try {
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Date dateNaissance = dateFormat.parse("31/09/2000");
+         Facture ss = new Facture();
+         ss.setArchivee(false);
+         ss.setDateCreationFacture(dateNaissance);
+         ss.setDateDerniereModificationFacture(dateNaissance);
+         ss.setFournisseur(null);
+         ss.setMontantFacture(10);
+         ss.setMontantRemise(0);
+         ss.setReglements(null);
+       // Facture s = new Facture(dateNaissance, dateNaissance, false, null, null, null);
+        
+        Facture savedStock = factureService.addFacture(ss);
+        
+        System.out.print("Facture " + savedStock);
+        assertNotNull(savedStock.getMontantFacture());
+        
+       
+       
+        log.info("Facture ajouter avec success");
 
-        facture.setIdFacture(1L);
-
-        when(factureRepository.findById(1L)).thenReturn(Optional.of(facture));
-        factureService.retrieveFacture(1L);
-        Assertions.assertNotNull(facture);
-
-        System.out.println(facture);
-        System.out.println(" Retrieve is working correctly...!!");
+        factureService.cancelFacture(savedStock.getIdFacture());
 
     }
 
-
     @Test
-    public void createFacturekTest()
-    {
-        Facture facture2 = new Facture(2L, 100, 500, null, null, null, null, null, null);
-        facture2.setIdFacture(2L);
+    public void testCancelFacture() throws ParseException {
 
-        factureService.addFacture(facture2);
-        verify(factureRepository, times(1)).save(facture2);
-        System.out.println(facture2);
-        System.out.println(" Create is working correctly...!!");
+        SimpleDateFormat dateFormat = null;
+        try {
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Date dateNaissance = dateFormat.parse("31/09/2000");
+        Facture s = new Facture();
+        s.setDateCreationFacture(dateNaissance);
+        s.setDateDerniereModificationFacture(dateNaissance);
+        s.setArchivee(false);
+        Facture savedStock = factureService.addFacture(s);
+
+        Facture s1 = factureService.retrieveFacture(savedStock.getIdFacture());
+        factureService.cancelFacture(savedStock.getIdFacture());
+        assertNotEquals(s1, savedStock);
+
     }
 
-
     @Test
-    public void getAllFactureTest()
-    {
-        List<Facture> Facturelist = new ArrayList<  Facture>() {
+    public void testretriveFacture() throws ParseException {
 
-            {
-                add(new Facture(3L, 100, 700, null, null, null, null, null, null));
-                add(new Facture(4L, 200, 800, null, null, null, null, null, null));
-                add(new Facture(5L, 300, 900, null, null, null, null, null, null));
-            }};
+        SimpleDateFormat dateFormat = null;
+        try {
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Date dateNaissance = dateFormat.parse("31/09/2000");
+        Facture s = new Facture();
+        s.setDateCreationFacture(dateNaissance);
+        s.setDateDerniereModificationFacture(dateNaissance);
+        s.setArchivee(false);
+        Facture savedStock = factureService.addFacture(s);
 
+        assertNotNull(factureService.retrieveFacture(savedStock.getIdFacture()));
 
-        when(factureService.retrieveAllFactures()).thenReturn(Facturelist);
-        //test
-        List<Facture> factureList = factureService.retrieveAllFactures();
-        assertEquals(3, factureList.size());
-        System.out.println(" Retrieve all is working correctly...!!");
+    }
+    @Test
+    public void testretriveAllFacture() throws ParseException {
+
+        SimpleDateFormat dateFormat = null;
+        try {
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        List<Facture> factures = (List<Facture>) factureService.retrieveAllFactures();
+        int expected = factures.size();
+        Date dateNaissance = dateFormat.parse("31/09/2000");
+        Facture s = new Facture();
+        s.setDateCreationFacture(dateNaissance);
+        s.setDateDerniereModificationFacture(dateNaissance);
+        s.setArchivee(false);
+       
+        Facture savedStock = factureService.addFacture(s);
+
+        assertEquals(expected +1, factureService.retrieveAllFactures().size());
+        factureService.cancelFacture(savedStock.getIdFacture());
+        
+
     }
 }
