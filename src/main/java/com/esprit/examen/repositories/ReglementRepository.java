@@ -3,6 +3,7 @@ package com.esprit.examen.repositories;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +14,7 @@ import com.esprit.examen.entities.Produit;
 import com.esprit.examen.entities.Reglement;
 
 @Repository
-public interface ReglementRepository extends CrudRepository<Reglement, Long>{
+public interface ReglementRepository extends JpaRepository<Reglement, Long> {
 	@Query("SELECT r FROM Reglement r where r.facture.idFacture=:idFacture")
 	List<Reglement> retrieveReglementByFacture(@Param("idFacture") Long idFacture);
 
