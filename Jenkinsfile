@@ -28,6 +28,13 @@ pipeline {
             }
         }
         
+        
+        stage('Testing Maven Test'){
+            steps {
+                sh "mvn test"
+            }
+        }
+        
         stage('Testing Sonar Test'){
             steps {
                 sh "mvn verify sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
@@ -37,12 +44,6 @@ pipeline {
         stage('Testing Nexus Test'){
             steps {
                 sh "mvn deploy"
-            }
-        }
-        
-        stage('Testing Maven Test'){
-            steps {
-                sh "mvn test"
             }
         }
         
