@@ -45,5 +45,24 @@ pipeline {
                 sh "mvn test"
             }
         }
+        
+         stage('Testing Docker Login'){
+            steps {
+                sh "docker login -u louaybader -p iyed26429517"
+            }
+        }
+        
+        stage('Testing Docker Build'){
+            steps {
+                sh "docker build -t louaybader/springdevopsapp:1.0.SNAPSHOT ."
+            }
+        }
+        
+        stage('Testing Docker Push'){
+            steps {
+                sh "docker push louaybader/springdevopsapp"
+            }
+        }
+        
     }
 }
