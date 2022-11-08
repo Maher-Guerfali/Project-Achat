@@ -11,7 +11,7 @@ services:
      - MYSQL_ROOT_PASSWORD=pass
      - MYSQL_DATABASE=tpachato
      - MYSQL_USER=root
-     - MYSQL_PASSWORD=pass
+     - MYSQL_PASSWORD=
 
   spring_app:
     image: jouinibrahim/achat
