@@ -49,7 +49,7 @@ pipeline {
         
          stage('Testing Docker Login'){
             steps {
-                sh "docker login -u louaybader -p iyed26429517"
+                sh "docker login -u louaybader -p "
             }
         }
         
