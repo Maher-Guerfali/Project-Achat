@@ -34,6 +34,12 @@ pipeline {
             }
         }
         
+        stage('NEXUS'){
+            steps {
+                sh "mvn deploy"
+            }
+        }
+        
         stage('DOCKER'){
             steps {
                 sh "docker login -u strevana -p 949788Ab@"
