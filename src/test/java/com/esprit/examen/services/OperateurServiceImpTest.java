@@ -35,7 +35,7 @@ public class OperateurServiceImpTest {
 
     @Test
     @Order(1)
-    public void testupdateProduit() {
+    public void testupdateOperateur() {
         o.setNom("arbia");
         o = operateurRepository.save(o);
         log.info(o.toString());
