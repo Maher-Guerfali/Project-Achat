@@ -10,8 +10,7 @@ services:
     environment:
      - MYSQL_ROOT_PASSWORD=root
      - MYSQL_DATABASE=tpachato
-     - MYSQL_USER=root
-     - MYSQL_PASSWORD=
+  
 
   spring_app:
     image: jouinibrahim/achat
