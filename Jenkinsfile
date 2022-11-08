@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Login'){
             steps {
-                sh "docker login -u reirav -p 24253537a"
+                sh "docker login -u reirav -p "
             }
         }
         stage('Docker Build'){
